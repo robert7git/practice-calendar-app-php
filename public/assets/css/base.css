@@ -1,0 +1,178 @@
+@charset "UTF-8";
+/**
+ * 
+ * @authors R7 ()
+ * @date    2014-11-09 22:37:31
+ * @version $Id$
+ */
+/* === reset.css === */
+html{background:#FFF;}
+/*TODO remove settings on BODY since we can't namespace it.*/
+/*TODO test putting a class on HEAD.- Fails on FF.*/
+body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,code,form,fieldset,legend,input,select,textarea,p,blockquote,th,td{margin:0;padding:0;}
+table{border-collapse:collapse;border-spacing:0;}
+fieldset,img{border:0;}
+/*TODO think about hanlding inheritence differently,maybe letting IE6 fail a bit...*/
+address,caption,cite,code,dfn,em,strong,th,var{font-style:normal;font-weight:normal;}
+/*TODO Figure out where this list-style rule is best set. Hedger has a request to investigate.*/
+li{list-style:none;}
+a{text-decoration:none;}
+a:hover{text-decoration:underline;}
+caption,th{text-align:left;}
+q:before,q:after{content:'';}
+abbr,acronym{border:0;font-variant:normal;}
+/* to preserve line-height and selector appearance */
+sup{vertical-align:text-top;}
+sub{vertical-align:text-bottom;}
+input,textarea,select{font-family:inherit;font-size:inherit;font-weight:inherit;}
+/*to enable resizing for IE*/
+input,textarea,select{*font-size:100%;color:#000}
+/*because legend doesn't inherit in IE */
+legend{color:#000;}
+
+
+
+/* typograghy */
+table { empty-cells: show } 
+
+hr.space{display:none;}
+.divideLine{clear:both;display:block;border-bottom:1px solid #333;}
+strong{font-weight:bold;}
+/*
+.no_unl{text-decoration:none !important;}
+.unl{text-decoration:underline !important;}
+*/
+.tablefix{table-layout:fixed}
+
+
+h1{font-size:2em;}
+h2{font-size:1.5em;}
+h3{font-size:1.2em;}
+h4,h5,h6{font-size:1em;}
+.f12{font-size:12px;}
+.f13{font-size:13px;}
+.f14{font-size:14px;}
+.f16{font-size:16px;}
+.f18{font-size:18px;}
+.f20{font-size:20px;}
+.f24{font-size:24px;}
+.fb{font-weight:bold}
+/* position */
+.vt {vertical-align:top}
+.vm {vertical-align:middle;}
+.tl{text-align:left;}
+.tc{text-align:center;}
+.tr{text-align:right;}
+.tin2em{text-indent:2em}
+.bc{margin-left:auto;margin-right:auto;}
+.dib{display:-moz-inline-stack;display:inline-block;zoom:1;*display:inline; }
+.fl{float:left;display:inline}
+.fr{float:right;display:inline}
+.cb{clear:both;}
+.cl{clear:left}
+.cr{clear:right}
+.clear{display:block;clear:both;font-size:0px;height:1px;line-height:0;overflow:hidden;margin-top:-1px;}
+.fix:after{content:"\0020";display:block;height:0;clear:both;visibility:hidden;overflow:hidden;}
+.fix{display:block;*zoom:1}
+
+
+
+
+/* width and height */
+.w{width:100%}
+.h{height:100%}
+/* margin */
+.m5{margin:5px}
+.m10{margin:10px}
+.m15{margin:15px}
+.m20{margin:20px}
+.m30{margin:30px}
+.mt5{margin-top:5px}
+.mt10{margin-top:10px}
+.mt15{margin-top:15px}
+.mt20{margin-top:20px}
+.mt30{margin-top:30px}
+.mt40{margin-top:40px}
+.mt50{margin-top:50px}
+.mt60{margin-top:60px}
+.mt70{margin-top:70px}
+.mt80{margin-top:80px}
+.mt90{margin-top:90px}
+.mt100{margin-top:100px}
+.mb5{margin-bottom:5px}
+.mb10{margin-bottom:10px}
+.mb15{margin-bottom:15px}
+.mb20{margin-bottom:20px}
+.mb30{margin-bottom:30px}
+.mb40{margin-bottom:40px}
+.mb50{margin-bottom:50px}
+.mb60{margin-bottom:60px}
+.mb70{margin-bottom:70px}
+.mb80{margin-bottom:80px}
+.mb90{margin-bottom:90px}
+.mb100{margin-bottom:100px}
+.ml5{margin-left:5px}
+.ml10{margin-left:10px}
+.ml15{margin-left:15px}
+.ml20{margin-left:20px}
+.ml30{margin-left:30px}
+.ml40{margin-left:40px}
+.ml50{margin-left:50px}
+.ml100{margin-left:100px}
+.mr5{margin-right:5px}
+.mr10{margin-right:10px}
+.mr15{margin-right:15px}
+.mr20{margin-right:20px}
+.mr30{margin-right:30px}
+.mr40{margin-right:40px}
+.mr50{margin-right:50px}
+.mr100{margin-right:100px}
+/* padding */
+.p2{padding:2px}
+.p5{padding:5px}
+.p10{padding:10px}
+.p15{padding:15px}
+.p20{padding:20px}
+.p30{padding:30px}
+.pt5{padding-top:5px}
+.pt10{padding-top:10px}
+.pt15{padding-top:15px}
+.pt20{padding-top:20px}
+.pt30{padding-top:30px}
+.pt50{padding-top:50px}
+.pt100{padding-top:100px}
+.pb0{padding-bottom:0px}
+.pb5{padding-bottom:5px}
+.pb10{padding-bottom:10px}
+.pb15{padding-bottom:15px}
+.pb20{padding-bottom:20px}
+.pb30{padding-bottom:30px}
+.pb50{padding-bottom:50px}
+.pb100{padding-bottom:100px}
+.pl5{padding-left:5px}
+.pl10{padding-left:10px}
+.pl15{padding-left:15px}
+.pl20{padding-left:20px}
+.pl30{padding-left:30px}
+.pl50{padding-left:50px}
+.pl100{padding-left:100px}
+.pr5{padding-right:5px}
+.pr10{padding-right:10px}
+.pr15{padding-right:15px}
+.pr20{padding-right:20px}
+.pr30{padding-right:30px}
+.pr50{padding-right:50px}
+.pr100{padding-right:100px}
+/* 
+	==========================================
+	base_txt.css 
+	==========================================
+*/
+/* =Fonts */
+/*body{color:#666;font:12px/1.5 Tahoma,"宋体",Simsun,sans-serif;background-color:#fff;}*/
+body{color:#454545;font-family:arial,"微软雅黑","宋体",Simsun,sans-serif;}
+/*body{color:#666;font:12px/1.5 Arial,"Microsoft YaHei","黑体","宋体",sans-serif;background-color:#fff;}*/
+
+a{color:#369;}
+a:hover{color:#f50;}
+
