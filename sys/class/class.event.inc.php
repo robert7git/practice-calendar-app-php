@@ -21,7 +21,6 @@ class Event{
         	$this->end = $event['event_end'];
         } else {
         	throw new Exception("No event data was supplied.");
-        	
         }
     }
 }

@@ -306,19 +306,23 @@ ADMIN_OPTIONS;
     }    
 
     private function _adminEntryOptions($id){
-        return <<<ADMIN_OPTIONS
-        <div class="ctrlOptions fix">
-            <form action="admin.php" method="post">
-                <input type="submit" class="btn btn_submit fl mr5" name="edit_event" value="编辑"/>
-                <input type="hidden" name="event_id" value="$id"/>
-            </form>
-            <form action="confirmdelete.php" method="post">
-                <input type="submit" class="btn btn_link fl mr5" name="delete_event" value="删除"/>
-                <input type="hidden" name="event_id" value="$id"/>
-                <a class="btn btn_return btn_link fl" href="/">返回</a>
-            </form>
-        </div>
+        if (isset($_SESSION['user'])) {
+            return <<<ADMIN_OPTIONS
+            <div class="ctrlOptions fix">
+                <form action="admin.php" method="post">
+                    <input type="submit" class="btn btn_submit fl mr5" name="edit_event" value="编辑"/>
+                    <input type="hidden" name="event_id" value="$id"/>
+                </form>
+                <form action="confirmdelete.php" method="post">
+                    <input type="submit" class="btn btn_link fl mr5" name="delete_event" value="删除"/>
+                    <input type="hidden" name="event_id" value="$id"/>
+                    <a class="btn btn_return btn_link fl" href="/">返回</a>
+                </form>
+            </div>
 ADMIN_OPTIONS;
+        }else{
+            return null;
+        }
     }
 
     public function confirmDelete($id){

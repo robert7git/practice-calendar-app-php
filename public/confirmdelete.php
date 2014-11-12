@@ -1,7 +1,7 @@
 <?php
 include_once '../sys/core/init.inc.php';
 
-	if (isset($_POST['event_id'])) {
+	if (isset($_POST['event_id']) && isset($_SESSION['user'])) {
 		// $id = preg_replace('/[^0-9]/', '', $_GET['event_id']);
 		$id = (int)$_POST['event_id'];
 	} else {
