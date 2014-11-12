@@ -11,7 +11,7 @@
 	}
 
 	include_once '../sys/core/init.inc.php';
-	$page_title = "View Event";
+	$page_title = "查看事件";
 	$css_files = array(
 		'base.css',
 		'layout.css',

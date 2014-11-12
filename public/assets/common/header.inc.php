@@ -11,3 +11,14 @@
 <?php endforeach?>
 </head>
 <body>
+
+<div class="header">
+	<a class="logo" href="/">R日历</a>
+	<ul class="nav">
+		<!-- <li><a href="/">返回日历</a></li> -->
+	</ul>
+	<!-- <ul class="userNav">
+		<li><a href="login.php">登录</a></li>
+		<li><a href="register.php">注册</a></li>
+	</ul> -->
+</div>

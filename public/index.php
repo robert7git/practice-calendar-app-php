@@ -4,7 +4,7 @@
 ?>
 
 <?php
-	$page_title = "Event Calendar";
+	$page_title = "日历首页";
 	$css_files = array(
 		'base.css',
 		'layout.css',
@@ -16,9 +16,11 @@
 ?>
 <div id="container">
 	<div class="content">
-		<?php
-			echo $cal->buildCalendar();
-		?>
+		<div class="calendar">
+			<?php
+				echo $cal->buildCalendar();
+			?>
+		</div>
 	</div>
 </div>
 <?php

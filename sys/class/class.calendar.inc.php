@@ -130,7 +130,8 @@ FORM_MARKUP;
     public function buildCalendar(){
         // $cal_month = date('Y.M ', strtotime($this->_useDate));
     	$cal_month = date('Y . m ', strtotime($this->_useDate));
-    	$weekdays = array('Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat');
+        // $weekdays = array('Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat');
+    	$weekdays = array('日', '一', '二', '三', '四', '五', '六');
     	$html = "\n\t<h2>" . $cal_month . "</h2>";
     	for ($d=0, $labels=null;  $d<7 ; ++$d) { 
     		$labels .= "\n\t\t<li>" . $weekdays[$d] . "</li>";
@@ -180,7 +181,7 @@ FORM_MARKUP;
         /*若用户已登陆，显示管理操作选项*/
         $admin = $this->_adminGeneralOptions();
     	
-    	return $html . $admin;
+    	return $admin . $html ;
     }
 
     public function displayForm(){
@@ -286,16 +287,27 @@ FORM_MARKUP;
     }
 
     private function _adminGeneralOptions(){
+        if (isset($_SESSION['user'])) {
         return <<<ADMIN_OPTIONS
-        <div class="ctrlOptions">
-            <a class="btn btn_link" href="admin.php"> + 添加事件</a>
+        <div class="ctrlOptions fix">
+            <a class="btn btn_link fl mr5" href="admin.php"> + 添加事件</a>
         </div>
+        <form action="assets/inc/process.inc.php" method="post">
+            <input type="submit" class="btn btn_link fl mr5" value="退出"/>
+            <input type="hidden" name="token" value="$_SESSION[token]"/>
+            <input type="hidden" name="action" value="user_logout"/>
+        </form>
 ADMIN_OPTIONS;
+        } else {
+            return <<<ADMIN_OPTIONS
+            <a href="login.php">登录</a>
+ADMIN_OPTIONS;
+        }
     }    
 
     private function _adminEntryOptions($id){
         return <<<ADMIN_OPTIONS
-        <div class="fix ctrlOptions">
+        <div class="ctrlOptions fix">
             <form action="admin.php" method="post">
                 <input type="submit" class="btn btn_submit fl mr5" name="edit_event" value="编辑"/>
                 <input type="hidden" name="event_id" value="$id"/>

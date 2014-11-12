@@ -6,10 +6,7 @@
 .form textarea{border:1px solid;border-color:#aaa;background:#fff;}
 .form input.password:focus,
 .form input.text:focus,
-.form textarea:focus{
-	outline:2px solid #ffdc97;
-	border-color:#efa100;
-}
+.form textarea:focus{outline:2px solid #ffdc97;border-color:#efa100;}
 .form input.text,
 .form input.password{width:150px;padding:12px 5px;line-height:1;}
 .form textarea{width:300px;padding:3px 5px;overflow:hidden;resize:vertical;}
@@ -30,41 +27,27 @@
 .form label{margin-right:5px;vertical-align:0;}
 .form .fieldset{}
 .form legend {padding-top:1em;padding-bottom:1em;margin-bottom:2em;}
-/*.form span.label,*/
-/*.form label{margin-right:10px;display:-moz-inline-stack;display:inline-block;zoom:1;*display:inline;vertical-align:middle;}*/
-/*.form .text{margin-right:5px;vertical-align:middle;}*/
-/*.form .require_mark{display:-moz-inline-stack;display:inline-block;zoom:1;*display:inline;width:10px;vertical-align:middle;}*/
-/*.form .form{font-family:Tahoma;}*/
-/*.form table{border:0 none;}*/
-/*.form td,*/
-/*.form th{border:0 none;padding:8px 0;}*/
-/*.form .btn_line{}*/
-/*.form .formMsg-error,
-.form .formMsg-tip{padding:3px 5px;color:#888;display:none;font-size:12px;}
-.form .formMsg-error{color:#e93333;}
-.form .formMsg-tip{}
-.form .formMsg-error s,
-.form .formMsg-tip s{display:inline-block;width:16px;height:16px;font-size:0;vertical-align:middle;background:url("../images/formMsg.png") no-repeat scroll 0 0;}
-.form .formMsg-error s{background-position:0 0;}
-.form .formMsg-tip s{background-position:0 -96px;}*/
 
 
 body{color:#454545;font:normal normal normal 14px/1.5 arial,"微软雅黑", "Microsoft YaHei", "宋体",Simsun,sans-serif;;}
-
+body{
+	/*background-color: #333;*/
+}
 #container{
 	width: 960px;
 	margin:0 auto;
 }
-#header,
-/*#content,*/
-#footer{}
-#header{
-  /*//margin-bottom:10px;*/
+.footer,
+.header{padding:10px;}
+.footer{}
+.header{
+  margin-bottom:10px;
+  background-color: #eee;
 }
 
-a{color:#666;}
-a:hover{text-decoration:none;color:#454545;}
-a:active{color:#fff;background-color: #333;}
+a{color:#333;}
+a:hover{text-decoration:none;color:#fff;background-color: #666;}
+a:active{color:#999;background-color: #333;}
 
 .btn{display:inline-block;padding:5px 10px;line-height: 1;
 	color:#888;cursor:pointer;
@@ -77,7 +60,7 @@ a:active{color:#fff;background-color: #333;}
 	box-shadow:1px 1px 1px rgba(50,50,50,0.2);/*opera或ie9*/
 }
 .btn:hover{text-decoration:none;color:#666;border-color: #aaa;background: #eee;}
-.btn:active{color:#666;border-color: #aaa #ddd #ddd #aaa;background: #ddd;}
+.btn:active{color:#666;border-color: #aaa #c3c3c3 #c3c3c3 #aaa;background: #ddd;}
 .btn_submit{}
 .btn_return{}
 .btn_link{
@@ -90,57 +73,60 @@ a:active{color:#fff;background-color: #333;}
 	box-shadow:0 0 0 #fff;/*opera或ie9*/
 }
 .btn_link:hover{
-	border-color: #fff;background: none;
+	/*border-color: #fff;background: none;*/
 }
 .btn_link:active{
-	border-color: #aaa #ddd #ddd #aaa;background: #ddd;
+	border-color: #aaa #c3c3c3 #c3c3c3 #aaa;background: #ddd;
 }
 
-ul:after{content:"\0020";display:block;height:0;clear:both;visibility:hidden;overflow:hidden;}
-ul{display:block;*zoom:1;}
 
-li{
-	/*position: relative;*/
-	/*left: -1px;*/
-	/*top:-1px;*/
-	float: left;
-	width: 12%;
-	height: 70px;
-	overflow: hidden;
-	padding: 10px;
-	border: 1px solid #bbb;
-	margin:-1px 0 0 -1px;
-	font-size: 14px;
-}
-li a{
-	/*font-size: 12px;*/
-}
-.weekdays{
-	/*border: 1px solid #333;*/
-	clear: both;
-}
-.weekdays li{
-	height: 20px;
-	background-color: #ccc;
-}
-.fill{
-	background-color: #eee;
-}
 
-.event_view{
-	padding: 30px;
+
+.header{padding: 5px 10px;}
+.header:after{content:"\0020";display:block;height:0;clear:both;visibility:hidden;overflow:hidden;}
+.header{display:block;*zoom:1}
+.header .logo,
+.header .nav,
+.header .userNav{margin-right: 10px;}
+.header .logo,
+.header .nav,
+.header .userNav{float: left;}
+.header .nav li,
+.header .userNav li{float: left;margin-right: 10px;}
+
+
+
+/*日历视图*/
+.calendar{/*border: 1px solid #333;*/}
+.calendar ul:after{content:"\0020";display:block;height:0;clear:both;visibility:hidden;overflow:hidden;}
+.calendar ul{display:block;*zoom:1;}
+.calendar li{
+	float: left;overflow: hidden;
+	width: 12%;height: 70px;
+	padding: 10px;margin:-1px 0 0 -1px;font-size: 14px;
+	border: 1px solid #ddd;background-color: #fff;
 }
+.calendar li a{font-size: 12px;line-height: 1;}
+.calendar li a:hover{color: #36c;background:none;}
+.calendar li a:active{color: #aaa;background:#e4e4e4;}
+.calendar .weekdays{clear: both;}
+.calendar .weekdays li{height: 20px;background-color: #eee;}
+.calendar .fill{background-color: #f9f9f9;}
+
+/*查看事件*/
+.event_view{padding: 30px;}
 .event_view h2{}
-.event_view .dates{
-	font-size: 12px;
-	margin-bottom: 1em;
-	color: #bbb;
-}
+.event_view .dates{font-size: 12px;margin-bottom: 1em;color: #bbb;}
 
+/*操作按钮组*/
 .ctrlOptions{
 	padding: 10px 0;
 	/*border: 1px solid #333;*/
 }
+
+
+
+
 
 
 

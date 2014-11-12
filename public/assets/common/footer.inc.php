@@ -1,4 +1,4 @@
-<div id="footer">
+<div id="footer" class="footer">
 	robertxu7.com
 </div>
 </body>
