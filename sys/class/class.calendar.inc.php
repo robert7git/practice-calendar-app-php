@@ -189,54 +189,102 @@ FORM_MARKUP;
     		$id = (int) $_POST['event_id'];
     	} else {
     		$id = null;
-    		// $id = 1;
     	}
 
     	$submit = "添加事件";
 
-        $form_html = "";
     	if (!empty($id)) {
     		$event = $this->_loadEventById($id);
     		if (!is_object($event)) {
     			return NULL;
     		}
     		$submit = "编辑事件";
-    	}
-        // $retVal = (condition) ? a : b ;
-        $form_html .= '<form class="form" action="assets/inc/process.inc.php" method="post">'
-            . '<fieldset>'
-            .   '<legend>'. $submit . '</legend>'
-            .   '<dl>'
-            .       '<dt><label for="event_title">标题</label></dt>'
-            .        '<dd><input type="text" name="event_title" id="event_title" class="text" value="' . $event->title . '"/><dd>'
-            .    '</dl>'
+            return <<<OUTPUT_HTML
+                <div class="mod event_form">
+                    <div class="mod-hd">
+                        <h4 class="mod-tit">$submit</h4>
+                    </div>
+                    <div class="mod-bd">
+                        <form class="form" action="assets/inc/process.inc.php" method="post">
+                            <fieldset>
+                                <dl>
+                                   <dt><label for="event_title">标题</label></dt>
+                                    <dd><input type="text" name="event_title" id="event_title" class="text" value="  $event->title  "/><dd>
+                                </dl>
 
-            .    '<dl>'
-            .        '<dt><label for="event_start">开始</label></dt>'
-            .        '<dd><input type="text" name="event_start" id="event_start" class="text" value="' . $event->start . '"/></dd>'
-            .    '</dl>'
+                                <dl>
+                                    <dt><label for="event_start">开始</label></dt>
+                                    <dd><input type="text" name="event_start" id="event_start" class="text" value="  $event->start  "/></dd>
+                                </dl>
 
-            .    '<dl>'
-            .        '<dt><label for="event_end">结束</label></dt>'
-            .        '<dd><input type="text" name="event_end"  id="event_end" class="text" value="' . $event->end . '"/></dd>'
-            .    '</dl>'
+                                <dl>
+                                    <dt><label for="event_end">结束</label></dt>
+                                    <dd><input type="text" name="event_end"  id="event_end" class="text" value="  $event->end  "/></dd>
+                                </dl>
 
-            .    '<dl>'
-            .        '<dt><label for="event_description">描述</label></dt>'
-            .        '<dd><textarea name="event_description" id="event_description" rows="10" cols="20"/>' . $event->description .'</textarea>'
-            .        '</dd>'
-            .    '</dl>'
+                                <dl>
+                                    <dt><label for="event_description">描述</label></dt>
+                                    <dd><textarea name="event_description" id="event_description" rows="10" cols="20"/>  $event->description </textarea>
+                                    </dd>
+                                </dl>
 
-            .    '<div class="ctrlOptions">'
-            .        '<input type="hidden" name="event_id" value="' . $event->id . '"/>'
-            .        '<input type="hidden" name="token" value="' . $_SESSION['token'] . '"/>'
-            .        '<input type="hidden" name="action" value="event_edit"/>'
-            .       '<input type="submit" class="btn btn_submit mr5" name="event_submit" value="提交"/>'
-            .       '<a class="btn btn_link" href="./">取消</a>'
-            .    '</div>'
-            .'</fieldset>'
-            .'</form>';
-        return $form_html;
+                                <div class="ctrlOptions">
+                                    <input type="hidden" name="event_id" value="  $event->id  "/>
+                                    <input type="hidden" name="token" value="  $_SESSION[token]  "/>
+                                    <input type="hidden" name="action" value="event_edit"/>
+                                   <input type="submit" class="btn btn_submit mr5" name="event_submit" value="提交"/>
+                                   <a class="btn btn_link" href="./">取消</a>
+                                </div>
+                            </fieldset>
+                        </form>
+                    </div>
+                </div>
+OUTPUT_HTML;
+    	}else{
+            return <<<OUTPUT_HTML
+                <div class="mod event_form">
+                    <div class="mod-hd">
+                        <h4 class="mod-tit">
+                         $submit
+                        </h4>
+                    </div>
+                    <div class="mod-bd">
+                        <form class="form" action="assets/inc/process.inc.php" method="post">
+                            <fieldset>
+                                <dl>
+                                   <dt><label for="event_title">标题</label></dt>
+                                    <dd><input type="text" name="event_title" id="event_title" class="text" value=""/><dd>
+                                </dl>
+
+                                <dl>
+                                    <dt><label for="event_start">开始</label></dt>
+                                    <dd><input type="text" name="event_start" id="event_start" class="text" value=""/></dd>
+                                </dl>
+
+                                <dl>
+                                    <dt><label for="event_end">结束</label></dt>
+                                    <dd><input type="text" name="event_end"  id="event_end" class="text" value=""/></dd>
+                                </dl>
+
+                                <dl>
+                                    <dt><label for="event_description">描述</label></dt>
+                                    <dd><textarea name="event_description" id="event_description" rows="10" cols="20"/></textarea>
+                                    </dd>
+                                </dl>
+
+                                <div class="ctrlOptions">
+                                    <input type="hidden" name="event_id" value=""/>
+                                    <input type="hidden" name="token" value="  $_SESSION[token]  "/>
+                                    <input type="hidden" name="action" value="event_edit"/>
+                                   <input type="submit" class="btn btn_submit mr5" name="event_submit" value="提交"/>
+                                   <a class="btn btn_link" href="./">取消</a>
+                                </div>
+                            </fieldset>
+                        </form>
+                    </div>
+                </div>
+OUTPUT_HTML;
+        }
     }
 
     public function processForm(){
@@ -290,17 +338,17 @@ FORM_MARKUP;
         if (isset($_SESSION['user'])) {
         return <<<ADMIN_OPTIONS
         <div class="ctrlOptions fix">
-            <a class="btn btn_link fl mr5" href="admin.php"> + 添加事件</a>
+            <a class="btn fl mr5" id="btn-addEvent" href="admin.php"> + 添加事件</a>
+             <form action="assets/inc/process.inc.php" method="post">
+                <input type="submit" class="btn btn_link fl mr5" id="btn-userLogout" value="退出"/>
+                <input type="hidden" name="token" value="$_SESSION[token]"/>
+                <input type="hidden" name="action" value="user_logout"/>
+            </form>
         </div>
-        <form action="assets/inc/process.inc.php" method="post">
-            <input type="submit" class="btn btn_link fl mr5" value="退出"/>
-            <input type="hidden" name="token" value="$_SESSION[token]"/>
-            <input type="hidden" name="action" value="user_logout"/>
-        </form>
 ADMIN_OPTIONS;
         } else {
             return <<<ADMIN_OPTIONS
-            <a href="login.php">登录</a>
+            <a class="btn btn_link fl mr5" id="btn-userLogin" href="login.php">登录</a>
 ADMIN_OPTIONS;
         }
     }    
@@ -310,13 +358,12 @@ ADMIN_OPTIONS;
             return <<<ADMIN_OPTIONS
             <div class="ctrlOptions fix">
                 <form action="admin.php" method="post">
-                    <input type="submit" class="btn btn_submit fl mr5" name="edit_event" value="编辑"/>
+                    <input type="submit" class="btn btn_edite fl mr5" id="btn_eventEdite" name="edit_event" value="编辑"/>
                     <input type="hidden" name="event_id" value="$id"/>
                 </form>
                 <form action="confirmdelete.php" method="post">
                     <input type="submit" class="btn btn_link fl mr5" name="delete_event" value="删除"/>
                     <input type="hidden" name="event_id" value="$id"/>
-                    <a class="btn btn_return btn_link fl" href="/">返回</a>
                 </form>
             </div>
 ADMIN_OPTIONS;

@@ -6,19 +6,30 @@
 <title><?php echo $page_title;?></title>
 <meta name="description" content="">
 <meta name="keywords" content="">
-<?php foreach ($css_files as $css):?>
-	<link href="assets/css/<?php echo $css; ?>" rel="stylesheet">
-<?php endforeach?>
+
+<?php if (isset($css_files)):?>
+	<?php foreach ($css_files as $css):?>
+		<link href="assets/css/<?php echo $css; ?>" rel="stylesheet">
+	<?php endforeach?>
+<?php endif?>
+
 </head>
 <body>
 
 <div class="header">
 	<a class="logo" href="/">R日历</a>
 	<ul class="nav">
-		<!-- <li><a href="/">返回日历</a></li> -->
+		<li class="on"><a href="#">日</a></li>
+		<li><a href="#">周</a></li>
+		<li><a href="#">月</a></li>
+		<li><a href="#">年</a></li>
+		<li><a href="#">统计</a></li>
+		<li><a href="#">分类</a></li>
 	</ul>
 	<!-- <ul class="userNav">
-		<li><a href="login.php">登录</a></li>
-		<li><a href="register.php">注册</a></li>
+		<li><a href="/">年</a></li>
+		<li><a href="/">月</a></li>
+		<li><a href="/">星期</a></li>
+		<li><a href="/">日</a></li>
 	</ul> -->
 </div>

@@ -17,11 +17,9 @@ if (!isset($_SESSION['user'])) {
 
 <div id="container">
 	<div class="content">
-		<div class="event_form">
-		<?php
-			echo $cal->displayForm();
-		?>
-		</div>
+			<?php
+				echo $cal->displayForm();
+			?>
 	</div>
 </div>
 <?php

@@ -19,28 +19,33 @@ $css_files = array(
 
 <div id="container">
 	<div class="content">
-		<div class="login">
-			<form class="form" action="assets/inc/process.inc.php" method="post">
-				<fieldset>
-	               <legend><?php echo $page_title;?></legend>
-	               <dl>
-	                   <dt><label for="user_name">用户名</label></dt>
-	                    <dd><input type="text" name="user_name" id="user_name" class="text" value=""/><dd>
-	                </dl>
+		<div class="mod login">
+			<div class="mod-hd">
+				<h4 class="mod-tit"><?php echo $page_title;?></h4>
+			</div>
+			<div class="mod-bd">
+				<form class="form" action="assets/inc/process.inc.php" method="post">
+					<fieldset>
+		               <!-- <legend><?php echo $page_title;?></legend> -->
+		               <dl>
+		                   <dt><label for="user_name">用户名</label></dt>
+		                    <dd><input type="text" name="user_name" id="user_name" class="text" value=""/><dd>
+		                </dl>
 
-	                <dl>
-	                    <dt><label for="user_pass">密码</label></dt>
-	                    <dd><input type="password" name="user_pass"  id="user_pass" class="text"/></dd>
-	                </dl>
+		                <dl>
+		                    <dt><label for="user_pass">密码</label></dt>
+		                    <dd><input type="password" name="user_pass"  id="user_pass" class="text"/></dd>
+		                </dl>
 
-	                <div class="ctrlOptions">
-	                    <input type="hidden" name="token" value="<?php echo $_SESSION['token'];?>"/>
-	                    <input type="hidden" name="action" value="user_login"/>
-	                    <input type="submit" class="btn btn_submit mr5" name="event_submit" value="登录"/>
-	                    <a class="btn btn_link" href="/">注册</a>
-	                </div>
-	            </fieldset>
-            </form>
+		                <div class="ctrlOptions">
+		                    <input type="hidden" name="token" value="<?php echo $_SESSION['token'];?>"/>
+		                    <input type="hidden" name="action" value="user_login"/>
+		                    <input type="submit" class="btn btn_submit mr5" name="event_submit" value="登录"/>
+		                    <a class="btn btn_link" href="/">注册</a>
+		                </div>
+		            </fieldset>
+	            </form>
+            </div>
 		</div>
 	</div>
 </div>

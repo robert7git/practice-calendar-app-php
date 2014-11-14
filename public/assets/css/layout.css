@@ -135,22 +135,24 @@
   width: 190px;
   margin-left: -190px;
 }
-.module {
-  margin-bottom: 10px;
-  border: 1px solid #999;
+
+.mod {
+  /*margin-bottom: 10px;*/
+  /*border: 1px solid #ccc;*/
   background-color: #fff;
 }
-.module .module-hd {
-  border-bottom: 1px solid #999;
+.mod .mod-hd {
+  /*border-bottom: 1px solid #ccc;*/
   background-color: #f4f4f4;
 }
-.module .module-bd {
-  padding: 10px;
+.mod .mod-hd,
+.mod .mod-bd {
+  padding: 1em;
 }
-.module .module-hd .module-tit {
-  padding: 2px 10px;
+.mod .mod-hd .mod-tit {
+  /*padding: 2px 10px;*/
   font-size: 14px;
-  color: #787878;
+  /*color: #333;*/
 }
 
 

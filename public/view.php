@@ -27,10 +27,10 @@
 
 <div id="container">
 	<div class="content">
-		<div class="event_view">
-		<?php
-			echo $cal->displayEvent($id);
-		?>
+		<div class="mod event_view">
+			<?php
+				echo $cal->displayEvent($id);
+			?>
 		</div>
 	</div>
 </div>
