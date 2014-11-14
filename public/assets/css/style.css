@@ -1,9 +1,21 @@
 @charset "utf-8";
 @import url('../fonts/typicons/typicons.min.css');
+body{color:#454545;font:normal normal normal 14px/1.5 arial,"微软雅黑", "Microsoft YaHei", "宋体",Simsun,sans-serif;}
+body{background-color: #c3c2be;}
+/*body{background-color: #a3a2ae;}*/
+
+#container{margin:0 auto;}
+.footer{padding:0 1em 2em;color: #888;}
+.header{}
+.footer{}
+.header{}
+.header{padding: 5px 10px;}
+.content{padding: 1em;}
+.mod{}
+.mod .mod-hd .mod-tit{font-size: 2em;}
+
 /*=form=*/
-.form{
-	padding: 1em 4em 4em;
-}
+.form{padding: 1em 4em 4em;}
 .form input.text,
 .form input.password,
 .form textarea{border:1px solid;border-color:#aaa;background:#fff;}
@@ -32,48 +44,11 @@
 .form legend {padding-top:1em;padding-bottom:1em;margin-bottom:2em;}
 
 
-body{color:#454545;font:normal normal normal 14px/1.5 arial,"微软雅黑", "Microsoft YaHei", "宋体",Simsun,sans-serif;}
-body{
-	background-color: #333;
-}
-#container{
-	/*width: 960px;*/
-	margin:0 auto;
-}
-.footer{
-	padding:0 1em 2em; 
-	color: #ccc;
-	/*border: 1px solid #fff;*/
-}
-.header{}
-.footer{}
-.header{}
-.header{margin-bottom: 1em;padding: 5px 10px;}
-.content{padding: 0 1em 1em;}
-
-
-.mod{}
-/*.mod .mod-hd{padding: 10px;}*/
-.mod .mod-hd .mod-tit{font-size: 2em;}
 
 /* text&btn */
 a{color:#333;}
 a:hover{text-decoration:none;color:#fff;background-color: #666;}
 a:active{color:#999;background-color: #333;}
-/*.btn{display:inline-block;padding:5px 10px;line-height: 1;
-	color:#fff;cursor:pointer;
-	border: 1px solid #2455c3;
-	background: #2455c3;
-	-webkit-border-radius: 5px;
-	-moz-border-radius: 5px;
-	border-radius: 5px;
-    -moz-box-shadow:1px 1px 1px rgba(50,50,50,0.2);
-	-webkit-box-shadow:1px 1px 1px rgba(50,50,50,0.2);
-	box-shadow:1px 1px 1px rgba(50,50,50,0.2);
-}
-.btn:hover{text-decoration:none;color:#666;border-color: #aaa;background: #eee;}
-.btn:active{color:#666;border-color: #aaa #c3c3c3 #c3c3c3 #aaa;background: #ddd;}
-*/
 .btn{
 	padding: 2px 18px 0;
 	font-size: 24px;
@@ -115,30 +90,26 @@ a:active{color:#999;background-color: #333;}
 	background-image:-webkit-linear-gradient(to top, #c3c2be, #a3a2ae);
 	background-image:linear-gradient(to top,#c3c2be,#a3a2ae);
 }
-
-
-
 /*.btn_submit{}
 .btn_return{}*/
-.btn_link{
-	color: #333;
-	/*border-color: #fff;*/
-	background: none;
-	/*-webkit-border-radius: 5px;
-	-moz-border-radius: 5px;
-	border-radius: 5px;*/
-    /*-moz-box-shadow:0 0 0 #fff;
-	-webkit-box-shadow:0 0 0 #fff;
-	box-shadow:0 0 0 #fff;*/
-}
+.btn_link{color: #333;background: none;}
 .btn_link:hover{}
-.btn_link:active{
-	/*border-color: #aaa #c3c3c3 #c3c3c3 #aaa;*/
-}
+.btn_link:active{}
 
 
 
 /*popdialog*/
+.widget{background-color: #fff;}
+.widget .widget-tit{font-size: 2em;}
+.widget .widget-hd{background-color: #eee;}
+.widget .widget-hd,
+.widget .widget-bd{padding: 1em;}
+.mask{
+	display: none;
+	position: fixed;top:0;bottom: 0;
+	right: 0;left: 0;
+	background-color: rgba(0,0,0,0.45);
+}
 .popDialog{
 	display: none;
 	width: 60%;
@@ -154,8 +125,8 @@ a:active{color:#999;background-color: #333;}
 }
 .popDialog .close{
 	position: absolute;
-	top: -10px;
-	right: -10px;
+	top: -28px;
+	right: -25px;
 	font-size: 50px;
 	line-height: 1;
 	border-radius: 1em;
@@ -189,37 +160,12 @@ a:active{color:#999;background-color: #333;}
 	background-image:-webkit-linear-gradient(to top,#c3c2be, #333);
 	background-image:linear-gradient(to top, #c3c2be, #333);
 }
-.popDialog .close span{
-	display: none;
-}
-
-.widget{background-color: #fff;}
-.widget .widget-tit{font-size: 2em;}
-.widget .widget-hd{
-	background-color: #eee;
-}
-.widget .widget-hd,
-.widget .widget-bd{
-	padding: 1em;
-}
-
-.mask{
-	display: none;
-	position: fixed;
-	top:0;
-	bottom: 0;
-	right: 0;
-	left: 0;
-	background-color: rgba(0,0,0,0.45);
-}
+.popDialog .close span{display: none;}
 
 
 
 /*header*/
-.header{
-	/*border-bottom:1px solid #ccc; */
-	background-color: #fff;
-}
+.header{background-color: #fff;}
 .header:after{content:"\0020";display:block;height:0;clear:both;visibility:hidden;overflow:hidden;}
 .header{display:block;*zoom:1}
 .header .logo{
@@ -250,20 +196,12 @@ a:active{color:#999;background-color: #333;}
 	font-size: 18px;
 	border-radius: 5px;
 }
-
-.header .nav .on a{
-	/*color: #fff;
-	background-color: #fc6;*/
-}
+.header .nav .on a{}
 
 
 
 /*日历视图*/
-.calendar{
-	border: 0;
-	/*width: 96%;
-	margin: 0 auto;*/
-}
+.calendar{border: 0;}
 .calendar ul:after{content:"\0020";display:block;height:0;clear:both;visibility:hidden;overflow:hidden;}
 .calendar ul{display:block;*zoom:1;}
 .calendar li{
