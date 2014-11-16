@@ -1,16 +1,17 @@
 @charset "utf-8";
 @import url('../fonts/typicons/typicons.min.css');
+html{background-color: #333355;}
 body{color:#454545;font:normal normal normal 14px/1.5 arial,"微软雅黑", "Microsoft YaHei", "宋体",Simsun,sans-serif;}
-body{background-color: #c3c2be;}
+/*body{background-color: #666;}*/
 /*body{background-color: #a3a2ae;}*/
 
 #container{margin:0 auto;}
-.footer{padding:0 1em 2em;color: #888;}
+.footer{padding:1em 1em 2em;color: #888;}
 .header{}
 .footer{}
 .header{}
 .header{padding: 5px 10px;}
-.content{padding: 1em;}
+.content{padding: 1px 0 0 0;}
 .mod{}
 .mod .mod-hd .mod-tit{font-size: 2em;}
 
@@ -114,7 +115,7 @@ a:active{color:#999;background-color: #333;}
 	display: none;
 	width: 60%;
 	position: absolute;
-	top: 80px;
+	top: 30px;
 	left: 50%;
 	z-index: 10;
 	margin-left:-30%;
@@ -176,7 +177,7 @@ a:active{color:#999;background-color: #333;}
 	background: url("../images/logo.jpg") no-repeat 0 0;
 	background-size:80px 80px;
 	padding-right: 10px;
-	border-right: 1px solid #f4f4f4;
+	/*border-right: 1px solid #f4f4f4;*/
 }
 .header .logo,
 .header .nav,

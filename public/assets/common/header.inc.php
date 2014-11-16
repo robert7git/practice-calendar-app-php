@@ -13,19 +13,24 @@
 	<?php endforeach?>
 <?php endif?>
 
+<?php if (isset($js_files)):?>
+	<?php foreach ($js_files as $js):?>
+		<script src="assets/js/<?php echo $js; ?>" type="text/javascript"></script>
+	<?php endforeach?>
+<?php endif?>
 </head>
 <body>
 
 <div class="header">
 	<a class="logo" href="/">R日历</a>
-	<ul class="nav">
+	<!-- <ul class="nav">
 		<li class="on"><a href="#">日</a></li>
 		<li><a href="#">周</a></li>
 		<li><a href="#">月</a></li>
 		<li><a href="#">年</a></li>
 		<li><a href="#">统计</a></li>
 		<li><a href="#">分类</a></li>
-	</ul>
+	</ul> -->
 	<!-- <ul class="userNav">
 		<li><a href="/">年</a></li>
 		<li><a href="/">月</a></li>

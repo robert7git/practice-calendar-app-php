@@ -24,10 +24,13 @@
 			'header' => 'Location: ../../'
 		)
 	);
+
 	if($_POST['token'] == $_SESSION['token'] 
 		&& isset($actions[$_POST['action']])){
 		$use_array = $actions[$_POST['action']];
 		$obj = new $use_array['object']($dbo);
+
+		//出现问题，这里经过ajax处理后返回值是 lastInsertId，不是true ，
 		if (true === $msg = $obj->$use_array['method']()) {
 			header($use_array['header']);
 			exit;

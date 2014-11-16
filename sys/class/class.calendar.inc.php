@@ -28,9 +28,6 @@ class Calendar extends DB_Connect {
 
         $ts = mktime(0,0,0, $this->_m, 1, $this->_y);
         $this->_startDay = date('w', $ts);
-
-
-        // $this->_loadEventData(1);
         // echo "<pre>", print_r($this->_loadEventData(1)), "</pre>";
         // echo "<pre>", print_r($this->_loadEventData()), "</pre>";
         // echo "<pre>", print_r($this->_loadEventById(1)), "</pre>";
@@ -107,10 +104,14 @@ class Calendar extends DB_Connect {
         $admin = $this->_adminEntryOptions($id);
 
     	return <<<FORM_MARKUP
-        <h2>$event->title</h2>
-    	\n\t<p class="dates">$date &nbsp; $start &mdash; $end</p>
-    	\n\t<p>$event->description</p>
-        $admin
+        <div class="mod">
+            <div class="mod-hd"><h2>$event->title</h2></div>
+            <div class="mod-bd">
+            	\n\t<p class="dates">$date &nbsp; $start &mdash; $end</p>
+            	\n\t<p>$event->description</p>
+                $admin
+            </div>
+        </div>
 FORM_MARKUP;
     }
 
@@ -129,10 +130,12 @@ FORM_MARKUP;
     }
     public function buildCalendar(){
         // $cal_month = date('Y.M ', strtotime($this->_useDate));
-    	$cal_month = date('Y . m ', strtotime($this->_useDate));
+        $cal_month = date('Y . m ', strtotime($this->_useDate));
+    	$cal_id = date('Y-m ', strtotime($this->_useDate));
         // $weekdays = array('Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat');
     	$weekdays = array('日', '一', '二', '三', '四', '五', '六');
-    	$html = "\n\t<h2>" . $cal_month . "</h2>";
+        //w3c规定id第一个字符必须是字母
+    	$html = "\n\t<h2 class='calendar-date' id='month-$cal_id'>" . $cal_month . "</h2>";
     	for ($d=0, $labels=null;  $d<7 ; ++$d) { 
     		$labels .= "\n\t\t<li>" . $weekdays[$d] . "</li>";
     	}
@@ -205,35 +208,35 @@ FORM_MARKUP;
                         <h4 class="mod-tit">$submit</h4>
                     </div>
                     <div class="mod-bd">
-                        <form class="form" action="assets/inc/process.inc.php" method="post">
+                        <form class="form" id="editeEvent_form" action="assets/inc/process.inc.php" method="post">
                             <fieldset>
                                 <dl>
                                    <dt><label for="event_title">标题</label></dt>
-                                    <dd><input type="text" name="event_title" id="event_title" class="text" value="  $event->title  "/><dd>
+                                    <dd><input type="text" name="event_title" id="event_title" class="text" value="$event->title"/><dd>
                                 </dl>
 
                                 <dl>
                                     <dt><label for="event_start">开始</label></dt>
-                                    <dd><input type="text" name="event_start" id="event_start" class="text" value="  $event->start  "/></dd>
+                                    <dd><input type="text" name="event_start" id="event_start" class="text" value="$event->start"/></dd>
                                 </dl>
 
                                 <dl>
                                     <dt><label for="event_end">结束</label></dt>
-                                    <dd><input type="text" name="event_end"  id="event_end" class="text" value="  $event->end  "/></dd>
+                                    <dd><input type="text" name="event_end"  id="event_end" class="text" value="$event->end"/></dd>
                                 </dl>
 
                                 <dl>
                                     <dt><label for="event_description">描述</label></dt>
-                                    <dd><textarea name="event_description" id="event_description" rows="10" cols="20"/>  $event->description </textarea>
+                                    <dd><textarea name="event_description" id="event_description" rows="10" cols="20">$event->description</textarea>
                                     </dd>
                                 </dl>
 
                                 <div class="ctrlOptions">
-                                    <input type="hidden" name="event_id" value="  $event->id  "/>
-                                    <input type="hidden" name="token" value="  $_SESSION[token]  "/>
+                                    <input type="hidden" name="event_id" value="$event->id"/>
+                                    <input type="hidden" name="token" value="$_SESSION[token]"/>
                                     <input type="hidden" name="action" value="event_edit"/>
                                    <input type="submit" class="btn btn_submit mr5" name="event_submit" value="提交"/>
-                                   <a class="btn btn_link" href="./">取消</a>
+                                   <a class="btn btn_link btn_cancel" id="btn_cancel" href="./">取消</a>
                                 </div>
                             </fieldset>
                         </form>
@@ -249,21 +252,20 @@ OUTPUT_HTML;
                         </h4>
                     </div>
                     <div class="mod-bd">
-                        <form class="form" action="assets/inc/process.inc.php" method="post">
+                        <form class="form" id="editeEvent_form" action="assets/inc/process.inc.php" method="post">
                             <fieldset>
                                 <dl>
                                    <dt><label for="event_title">标题</label></dt>
-                                    <dd><input type="text" name="event_title" id="event_title" class="text" value=""/><dd>
+                                    <dd><input type="text" name="event_title" id="event_title" class="text"/></dd>
                                 </dl>
-
                                 <dl>
                                     <dt><label for="event_start">开始</label></dt>
-                                    <dd><input type="text" name="event_start" id="event_start" class="text" value=""/></dd>
+                                    <dd><input type="text" name="event_start" id="event_start" class="text"/></dd>
                                 </dl>
 
                                 <dl>
                                     <dt><label for="event_end">结束</label></dt>
-                                    <dd><input type="text" name="event_end"  id="event_end" class="text" value=""/></dd>
+                                    <dd><input type="text" name="event_end"  id="event_end" class="text"</dd>
                                 </dl>
 
                                 <dl>
@@ -273,11 +275,11 @@ OUTPUT_HTML;
                                 </dl>
 
                                 <div class="ctrlOptions">
-                                    <input type="hidden" name="event_id" value=""/>
-                                    <input type="hidden" name="token" value="  $_SESSION[token]  "/>
+                                    <input type="hidden" name="event_id"/>
+                                    <input type="hidden" name="token" value="$_SESSION[token]"/>
                                     <input type="hidden" name="action" value="event_edit"/>
-                                   <input type="submit" class="btn btn_submit mr5" name="event_submit" value="提交"/>
-                                   <a class="btn btn_link" href="./">取消</a>
+                                    <input type="submit" class="btn btn_submit mr5" name="event_submit" value="提交"/>
+                                    <a class="btn btn_link btn_cancel" id="btn_cancel" href="./">取消</a>
                                 </div>
                             </fieldset>
                         </form>
@@ -297,6 +299,8 @@ OUTPUT_HTML;
         $desc = htmlentities($_POST['event_description'], ENT_QUOTES);
         $start = htmlentities($_POST['event_start'], ENT_QUOTES);
         $end = htmlentities($_POST['event_end'], ENT_QUOTES);
+
+        // echo $start;
 
         /*如果没有活动id，就创建一个新活动*/
         if (empty($_POST['event_id'])) {
@@ -320,7 +324,7 @@ OUTPUT_HTML;
 
         /*绑定数据，执行查询*/
         try {
-            echo "$sql";
+            // echo "$sql";
             $stmt = $this->db->prepare($sql);
             $stmt->bindParam(":title", $title, PDO::PARAM_STR);
             $stmt->bindParam(":description", $desc, PDO::PARAM_STR);
@@ -328,7 +332,7 @@ OUTPUT_HTML;
             $stmt->bindParam(":end", $end, PDO::PARAM_STR);
             $stmt->execute();
             $stmt->closeCursor();
-            return true;
+            return $this->db->lastInsertId();
         } catch (Exception $e) {
             return $e->getMessage();
         }
@@ -360,10 +364,12 @@ ADMIN_OPTIONS;
                 <form action="admin.php" method="post">
                     <input type="submit" class="btn btn_edite fl mr5" id="btn_eventEdite" name="edit_event" value="编辑"/>
                     <input type="hidden" name="event_id" value="$id"/>
+                    <input type="hidden" name="token" value="$_SESSION[token]"/>
                 </form>
                 <form action="confirmdelete.php" method="post">
-                    <input type="submit" class="btn btn_link fl mr5" name="delete_event" value="删除"/>
+                    <input type="submit" class="btn btn_link fl mr5" name="confirm_delete" value="删除"/>
                     <input type="hidden" name="event_id" value="$id"/>
+                    <input type="hidden" name="token" value="$_SESSION[token]"/>
                 </form>
             </div>
 ADMIN_OPTIONS;
@@ -374,6 +380,10 @@ ADMIN_OPTIONS;
 
     public function confirmDelete($id){
         if (empty($id)){
+            // echo 1111;
+            // echo $_POST['action'];
+            //     echo $_POST['confirm_delete'];
+            //     echo $_POST['event_id'];
            return null;
         }
         /*确保id是整数*/
@@ -381,14 +391,12 @@ ADMIN_OPTIONS;
 
         /*如果没有活动id，就创建一个新活动*/
         // echo $_POST['confirm_delete'];
-        if (isset($_POST['confirm_delete'])
-            && $_POST['token'] == $_SESSION['token']) {
+        if (isset($_POST['confirm_delete'])&& $_POST['token'] == $_SESSION['token']) {
             if ($_POST['confirm_delete'] == "yes") {
                 $sql = "DELETE FROM `events`
                 WHERE
                 `event_id` = :id
                 LIMIT 1";
-
                 /*绑定数据，执行查询*/
                 try {
                     // echo "$sql";
@@ -399,34 +407,39 @@ ADMIN_OPTIONS;
                     // $stmt->bindParam(":end", $end, PDO::PARAM_STR);
                     $stmt->execute();
                     $stmt->closeCursor();
-                    header('Location: ./');
+                    // header('Location: ./');
                     return;
                 } catch (Exception $e) {
                     return $e->getMessage();
                 }
             }else{
-                header('Location: ./');
-                return;
+                // // header('Location: ./');
+                // return;
+                $event = $this->_loadEventById($id);
+                // print_r($event);
+                if (!is_object($event)) {
+                    echo 2222;
+                    // header('Location: ./');
+                }
+                return <<<CONFIRM_DELETE
+                    <div class="mod event_form">
+                        <div class="mod-hd">
+                            <h4 class="mod-tit">确认删除？</h4>
+                        </div>
+                        <div class="mod-bd">
+                            <form action="confirmdelete.php" method="post">
+                                <div class="fix ctrlOptions">
+                                    <input type="submit" class="btn" name="confirm_delete" value="yes"/>
+                                    <input type="submit" class="btn" name="confirm_delete" value="no"/>
+                                    <input type="hidden" name="event_id" value="$event->id"/>
+                                    <input type="hidden" name="token" value="$_SESSION[token]"/>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+CONFIRM_DELETE;
             }
         }
-
-        $event = $this->_loadEventById($id);
-
-        // print_r($event);
-        if (!is_object($event)) {
-            header('Location: ./');
-        }
-        return <<<CONFIRM_DELETE
-            <form action="confirmdelete.php" method="post">
-                <h2>确认删除？</h2>
-                <div class="fix ctrlOptions">
-                    <input type="submit" class="btn" name="confirm_delete" value="yes"/>
-                    <input type="submit" class="btn" name="confirm_delete" value="no"/>
-                    <input type="hidden" name="event_id" value="$event->id"/>
-                    <input type="hidden" name="token" value="$_SESSION[token]"/>
-                </div>
-            </form>
-CONFIRM_DELETE;
     }
 }
 

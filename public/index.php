@@ -14,12 +14,14 @@
 <?php
 	$js_files = array(
 		'jquery-1.11.1.min.js',
+		// 'jquery.js'
 		'init.js'
 	);
 ?>
 <?php
 	include_once 'assets/common/header.inc.php';
 ?>
+
 <div id="container">
 	<div class="content">
 		<div class="mod calendar">
@@ -35,7 +37,14 @@
 	</div>
 </div>
 
+
 <?php
 	include_once 'assets/common/footer.inc.php';
 ?>
+
+
+
+
+
+
 
