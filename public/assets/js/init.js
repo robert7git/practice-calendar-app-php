@@ -179,13 +179,12 @@ $(function () {
 	/*删除/提交*/
 	$(document).on("click", "input[name=confirm_delete],input[name=event_submit]", function (e) {
 		e.preventDefault();
-		// alert(1);
-		var formData = $(this).parents("form").serialize();
-		var submitVal = $(this).val();
-		var remove = false;
+		var formData = $(this).parents("form").serialize(),
+			submitVal = $(this).val(),
+			remove = false;
 		if ($(this).attr("name") == "confirm_delete") {
 			formData += "&action=confirm_delete" + "&confirm_delete=" + submitVal;
-			console.log(formData);
+			// console.log(formData);
 			if (submitVal == "yes") {
 				remove = true;
 			}
@@ -195,19 +194,28 @@ $(function () {
 			url: processFile,
 			data: formData,
 			success: function (data) {
-				dialog.removeContent();
-				if ($(e.target).siblings("input[name=event_id]").val().length === 0) {
-					dialog.setContent(data);
-					process.insertEvent(data, formData);
-				} else if ($(e.target).siblings("input[name=event_id]").val().length !== 0) {
+				// dialog.removeContent();
+				if ($(e.target).parents("form").attr("id") === "editeEvent_form") {
 					process.removeEvent();
-					// console.log(data);
 					process.insertEvent($(e.target).siblings("input[name=event_id]").val(), formData);
+					dialog.hide();
+				} else if ($(e.target).parents("form").attr("id") === "addEvent_form") {
+					if ($(e.target).siblings("input[name=event_id]").val().length === 0) {
+						dialog.removeContent();
+						dialog.setContent(data);
+						process.insertEvent(data, formData);
+						dialog.hide();
+					}
 				}
-				if (remove === true) {
-					process.removeEvent();
+				if ($(e.target).attr("name") == "confirm_delete") {
+					// alert(1);
+					dialog.removeContent();
+					dialog.setContent(data);
+					if (remove === true) {
+						process.removeEvent();
+						dialog.hide();
+					}
 				}
-				dialog.hide();
 			},
 			error: function (msg) {
 				console.log(msg);

@@ -4,6 +4,7 @@ html{background-color: #333355;}
 body{color:#454545;font:normal normal normal 14px/1.5 arial,"微软雅黑", "Microsoft YaHei", "宋体",Simsun,sans-serif;}
 /*body{background-color: #666;}*/
 /*body{background-color: #a3a2ae;}*/
+body{min-width: 960px;}
 
 #container{margin:0 auto;}
 .footer{padding:1em 1em 2em;color: #888;}
@@ -11,9 +12,9 @@ body{color:#454545;font:normal normal normal 14px/1.5 arial,"微软雅黑", "Mic
 .footer{}
 .header{}
 .header{padding: 5px 10px;}
-.content{padding: 1px 0 0 0;}
+.content{padding: 1em;}
 .mod{}
-.mod .mod-hd .mod-tit{font-size: 2em;}
+.mod .mod-hd .mod-tit{font-size: 1.4em;}
 
 /*=form=*/
 .form{padding: 1em 4em 4em;}
@@ -51,9 +52,9 @@ a{color:#333;}
 a:hover{text-decoration:none;color:#fff;background-color: #666;}
 a:active{color:#999;background-color: #333;}
 .btn{
-	padding: 2px 18px 0;
+	padding: 0.5em 0.8em;
 	font-size: 24px;
-	line-height: 48px;
+	line-height: 1;
 	color: #fff;
 	border: 0;
 	cursor: pointer;
@@ -162,9 +163,12 @@ a:active{color:#999;background-color: #333;}
 	background-image:linear-gradient(to top, #c3c2be, #333);
 }
 .popDialog .close span{display: none;}
-
-
-
+.popDialog .btn{
+	/*padding: 10px;*/
+	font-size: 14px;
+}
+/*.popDialog .mod-hd{background: none;border-bottom: 1px solid #ccc;}*/
+.popDialog .dates{color: #aaa;}
 /*header*/
 .header{background-color: #fff;}
 .header:after{content:"\0020";display:block;height:0;clear:both;visibility:hidden;overflow:hidden;}
@@ -207,14 +211,15 @@ a:active{color:#999;background-color: #333;}
 .calendar ul{display:block;*zoom:1;}
 .calendar li{
 	float: left;overflow: hidden;
-	width: 12%;height: 70px;
-	padding: 10px;margin:-1px 0 0 -1px;font-size: 14px;
+	width: 13%;height: 80px;
+	padding: 5px;margin:-1px 0 0 -1px;font-size: 14px;
 	border: 1px solid #ddd;background-color: #fff;
 }
-.calendar li a{font-size: 12px;line-height: 1;}
+.calendar li a{font-size: 12px;line-height: 1.2;}
 .calendar li a:hover{color: #36c;background:none;}
 .calendar li a:active{color: #aaa;background:#e4e4e4;}
-.calendar li a.actived{color:#fff;background:#333;}
+.calendar li a.actived{color:#fff;background:#000;}
+.calendar li a.event-tit{display: block;padding:0.2em;border-radius: 5px;}
 .calendar .weekdays{clear: both;}
 .calendar .weekdays li{height: 20px;background-color: #eee;}
 .calendar .weekdays li{text-align: center;}

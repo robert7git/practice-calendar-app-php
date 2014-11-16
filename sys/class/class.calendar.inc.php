@@ -161,7 +161,7 @@ FORM_MARKUP;
     		if ($this->_startDay<$i && $this->_daysInMonth>=$c) {
 	    		if (isset($events[$c])) {
 	    			foreach ($events[$c] as $event) {
-	    				$link = '<a href="view.php?event_id=' . $event->id . '">' . $event->title . "</a>";
+	    				$link = '<a class="event-tit" href="view.php?event_id=' . $event->id . '">' . $event->title . "</a>";
 	    				$event_info .= "\n\t\t\t$link";
 	    			}
 	    		}
@@ -252,7 +252,7 @@ OUTPUT_HTML;
                         </h4>
                     </div>
                     <div class="mod-bd">
-                        <form class="form" id="editeEvent_form" action="assets/inc/process.inc.php" method="post">
+                        <form class="form" id="addEvent_form" action="assets/inc/process.inc.php" method="post">
                             <fieldset>
                                 <dl>
                                    <dt><label for="event_title">标题</label></dt>
