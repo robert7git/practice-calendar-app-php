@@ -12,9 +12,9 @@ include_once '../sys/core/init.inc.php';
 	
 	$page_title = "Confirm Delete Event?";
 	$css_files = array(
-		'base.css',
-		'layout.css',
-		'style.css'
+		'assets/css/base.css',
+		'assets/css/layout.css',
+		'assets/css/style.css',
 	);
 
 

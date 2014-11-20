@@ -133,7 +133,8 @@ FORM_MARKUP;
         $cal_month = date('Y . m ', strtotime($this->_useDate));
     	$cal_id = date('Y-m ', strtotime($this->_useDate));
         // $weekdays = array('Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat');
-    	$weekdays = array('日', '一', '二', '三', '四', '五', '六');
+        $weekdays = array('日', '一', '二', '三', '四', '五', '六');
+    	// $weekdays = array( '一', '二', '三', '四', '五', '六','日');
         //w3c规定id第一个字符必须是字母
     	$html = "\n\t<h2 class='calendar-date' id='month-$cal_id'>" . $cal_month . "</h2>";
     	for ($d=0, $labels=null;  $d<7 ; ++$d) { 
@@ -217,12 +218,18 @@ FORM_MARKUP;
 
                                 <dl>
                                     <dt><label for="event_start">开始</label></dt>
-                                    <dd><input type="text" name="event_start" id="event_start" class="text" value="$event->start"/></dd>
+                                    <dd>
+                                        <input type="text" name="event_start" id="event_start" class="text datepicker" value="$event->start"/>
+                                        <!--<input type="text" name="event_start_time" id="event_start_time" class="text timepicker"/>-->
+                                    </dd>
                                 </dl>
 
                                 <dl>
                                     <dt><label for="event_end">结束</label></dt>
-                                    <dd><input type="text" name="event_end"  id="event_end" class="text" value="$event->end"/></dd>
+                                    <dd>
+                                        <input type="text" name="event_end"  id="event_end" class="text datepicker" value="$event->end"/>
+                                        <!--<input type="text" name="event_end_time"  id="event_end_time" class="text timepicker"/>-->
+                                    </dd>
                                 </dl>
 
                                 <dl>
@@ -255,22 +262,28 @@ OUTPUT_HTML;
                         <form class="form" id="addEvent_form" action="assets/inc/process.inc.php" method="post">
                             <fieldset>
                                 <dl>
-                                   <dt><label for="event_title">标题</label></dt>
-                                    <dd><input type="text" name="event_title" id="event_title" class="text"/></dd>
+                                    <dt><label for="event_title">标题</label></dt>
+                                    <dd><input type="text" name="event_title" id="event_title" class="text" placeholder="输入标题"/></dd>
                                 </dl>
                                 <dl>
                                     <dt><label for="event_start">开始</label></dt>
-                                    <dd><input type="text" name="event_start" id="event_start" class="text"/></dd>
+                                    <dd>
+                                        <input type="text" name="event_start" id="event_start" class="text datepicker" placeholder="开始时间"/>
+                                        <input type="text" name="event_start_time"  id="event_start_time" class="text timepicker"/>
+                                    </dd>
                                 </dl>
 
                                 <dl>
                                     <dt><label for="event_end">结束</label></dt>
-                                    <dd><input type="text" name="event_end"  id="event_end" class="text"</dd>
+                                    <dd>
+                                        <input type="text" name="event_end"  id="event_end" class="text datepicker" placeholder="结束" value=""/>
+                                        <input type="text" name="event_end_time"  id="event_end_time" class="text timepicker"/>
+                                    </dd>
                                 </dl>
 
                                 <dl>
                                     <dt><label for="event_description">描述</label></dt>
-                                    <dd><textarea name="event_description" id="event_description" rows="10" cols="20"/></textarea>
+                                    <dd><textarea name="event_description" id="event_description" rows="10" cols="20" placeholder="事件描述"/></textarea>
                                     </dd>
                                 </dl>
 
@@ -301,6 +314,10 @@ OUTPUT_HTML;
         $end = htmlentities($_POST['event_end'], ENT_QUOTES);
 
         // echo $start;
+
+        if (!$this->_validDate($start) || !$this->_validDate($end)) {
+            return "mymsg:Invalid date format! Use YYYY-MM-DD HH:MM:SS";
+        }
 
         /*如果没有活动id，就创建一个新活动*/
         if (empty($_POST['event_id'])) {
@@ -362,12 +379,12 @@ ADMIN_OPTIONS;
             return <<<ADMIN_OPTIONS
             <div class="ctrlOptions fix">
                 <form action="admin.php" method="post">
-                    <input type="submit" class="btn btn_edite fl mr5" id="btn_eventEdite" name="edit_event" value="编辑"/>
+                    <button type="submit" class="btn btn_edite" id="btn_eventEdite" name="edit_event">编辑</button>
                     <input type="hidden" name="event_id" value="$id"/>
                     <input type="hidden" name="token" value="$_SESSION[token]"/>
                 </form>
                 <form action="confirmdelete.php" method="post">
-                    <input type="submit" class="btn btn_link fl mr5" name="confirm_delete" value="删除"/>
+                    <button type="submit" class="btn btn_link btn_delete" name="confirm_delete">删除</button>
                     <input type="hidden" name="event_id" value="$id"/>
                     <input type="hidden" name="token" value="$_SESSION[token]"/>
                 </form>
@@ -418,7 +435,7 @@ ADMIN_OPTIONS;
                 $event = $this->_loadEventById($id);
                 // print_r($event);
                 if (!is_object($event)) {
-                    echo 2222;
+                    // echo 2222;
                     // header('Location: ./');
                 }
                 return <<<CONFIRM_DELETE
@@ -440,6 +457,15 @@ ADMIN_OPTIONS;
 CONFIRM_DELETE;
             }
         }
+    }
+
+    /*验证日期字符串
+    * @param string $date
+    * @return bool true,失败 false
+    */
+    private function _validDate($date){
+        $pattern = '/^(\d{4}(-\d{2}){2} (\d{2})(:\d{2}){2})$/';
+        return preg_match($pattern, $date) == 1 ? true : false;
     }
 }
 

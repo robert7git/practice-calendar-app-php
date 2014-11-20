@@ -9,6 +9,17 @@ var G = {};
 G.tools = {};
 G.process = {};
 G.widget = {};
+G.valid = {};
+// 反序列化把表单装进数组对象中
+G.valid = {
+	logMsg: $('<div class="logMsg"></div>'),
+	validDate: function (date) {
+		var pattern = /^(\d{4}(-\d{2}){2} (\d{2})(:\d{2}){2})$/;
+		//匹配返回true,失败false;
+		// alert(date.match(pattern));
+		return date.match(pattern) !== null;
+	}
+};
 // 弹窗
 G.widget.dialog = function () {
 	var pophtml = '<div class="widget popDialog">' + '<a class="close" href="javascript:void(0)"><span>关闭</span><i class="typcn typcn-times"></i></a>' + '<div class="widget-bd">' + '</div>' + '</div>',
@@ -34,6 +45,12 @@ G.widget.dialog = function () {
 		setContent: function (str) {
 			$(".popDialog").find(".widget-bd").append(str);
 		},
+		setWidth: function (num) {
+			$(".popDialog").css({
+				"width": num,
+				"margin-left": -(num / 2)
+			});
+		},
 		removeContent: function () {
 			$(".popDialog").find(".widget-bd").empty();
 		},
@@ -57,6 +74,7 @@ G.widget.dialog = function () {
 		init: obj.init,
 		setTitle: obj.setTitle,
 		setContent: obj.setContent,
+		setWidth: obj.setWidth,
 		removeContent: obj.removeContent,
 		show: obj.show,
 		hide: obj.hide
@@ -89,10 +107,69 @@ G.tools.urlDecode = function (str) {
 	var converted = str.replace(/\+/g, ' ');
 	return decodeURIComponent(converted);
 };
-G.process.removeEvent = function () {
-	$(".actived").fadeOut(function () {
-		$(this).remove();
+// datepicker
+G.tools.datepicker = function () {
+	var $datepicker = $('.datepicker').pickadate(),
+		picker = $datepicker.pickadate('picker');
+	$datepicker.pickadate({
+		weekdaysShort: ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'],
+		close: '关闭',
+		clear: '清除',
+		formatSubmit: 'yyyy-mm-dd'
 	});
+	picker.on({
+		open: function () {
+			// console.log('Opened up!')
+		},
+		close: function () {
+			// console.log('Closed now')
+		},
+		render: function () {
+			// console.log('Just rendered anew')
+		},
+		stop: function () {
+			// console.log('See ya')
+		},
+		set: function (thingSet) {
+			// console.log('Set stuff:', thingSet)
+		}
+	});
+	return picker;
+};
+// datepicker
+G.tools.timepicker = function () {
+	var $datepicker = $('.datepicker').pickadate(),
+		picker = $datepicker.pickadate('picker');
+	$datepicker.pickadate({
+		weekdaysShort: ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'],
+		close: '关闭',
+		clear: '清除',
+		formatSubmit: 'yyyy-mm-dd'
+	});
+	picker.on({
+		open: function () {
+			// console.log('Opened up!')
+		},
+		close: function () {
+			// console.log('Closed now')
+		},
+		render: function () {
+			// console.log('Just rendered anew')
+		},
+		stop: function () {
+			// console.log('See ya')
+		},
+		set: function (thingSet) {
+			// console.log('Set stuff:', thingSet)
+		}
+	});
+	$('.timepicker').pickatime({
+		clear: '清除'
+	});
+	return picker;
+};
+G.process.removeEvent = function () {
+	$(".actived").remove();
 };
 G.process.insertEvent = function (data, formData) {
 	var tools = G.tools;
@@ -112,15 +189,17 @@ G.process.insertEvent = function (data, formData) {
 		// console.log(date);
 		var el = $("strong:contains(" + day + ")");
 		// console.log(el);
-		$("<a>").hide().attr("href", "view.php?event_id=" + data).text(entry.event_title).insertAfter(".calendar strong:contains(" + day + ")").delay(100).fadeIn("slow");
+		$("<a>").hide().attr("href", "view.php?event_id=" + data).addClass("event-tit").text(entry.event_title).insertAfter(".calendar strong:contains(" + day + ")").delay(100).fadeIn("slow");
 	}
 };
 /*domready*/
 $(function () {
 	var tools = G.tools,
 		process = G.process,
-		widget = G.widget;
-	var dialog = widget.dialog();
+		valid = G.valid,
+		widget = G.widget,
+		picker = null, //日历对象
+		dialog = widget.dialog();
 	dialog.init();
 	// console.log(dialog.init());
 	// dialog.setTitle();
@@ -146,6 +225,7 @@ $(function () {
 			// data :"action=event_view&event_id=1",
 			success: function (data) {
 				// console.log(data);
+				dialog.setWidth(700);
 				dialog.setContent(data);
 				dialog.show();
 			},
@@ -169,7 +249,10 @@ $(function () {
 				// console.log(data);
 				dialog.removeContent();
 				dialog.setContent(data);
+				dialog.setWidth(500);
 				dialog.show();
+				//初始化datepicker;
+				picker = tools.datepicker();
 			},
 			error: function (msg) {
 				console.log(msg);
@@ -179,9 +262,16 @@ $(function () {
 	/*删除/提交*/
 	$(document).on("click", "input[name=confirm_delete],input[name=event_submit]", function (e) {
 		e.preventDefault();
+		var elform = $(this).parents("form");
+		// picker.get('highlight');
+		// var dval = picker.get();
+		var dval = picker.get('highlight', 'yyyy-mm-dd');
+		console.log(dval);
 		var formData = $(this).parents("form").serialize(),
 			submitVal = $(this).val(),
-			remove = false;
+			remove = false,
+			start = $(this).parents("form").find("[name=event_start]").val(),
+			end = $(this).parents("form").find("[name=event_end]").val();
 		if ($(this).attr("name") == "confirm_delete") {
 			formData += "&action=confirm_delete" + "&confirm_delete=" + submitVal;
 			// console.log(formData);
@@ -189,12 +279,24 @@ $(function () {
 				remove = true;
 			}
 		}
+		if ($(this).siblings("[name=action]").val() == "event_edit") {
+			if (!valid.validDate(start) || !valid.validDate(end)) {
+				// console.log(elform.find(valid.logMsg));
+				if (elform.find(valid.logMsg).length === 0) {
+					valid.logMsg.text("日期格式应该是(如：YYYY-MM-DD HH:MM:SS)").prependTo(elform);
+					console.log(1);
+				} else {
+					valid.logMsg.text("valid.logMsg:标签已经存在的情况－只替换log文字");
+					// console.log("valid.logMsg:标签不存在的情况");
+				}
+				return false;
+			}
+		}
 		$.ajax({
 			type: "POST",
 			url: processFile,
 			data: formData,
 			success: function (data) {
-				// dialog.removeContent();
 				if ($(e.target).parents("form").attr("id") === "editeEvent_form") {
 					process.removeEvent();
 					process.insertEvent($(e.target).siblings("input[name=event_id]").val(), formData);
@@ -208,7 +310,6 @@ $(function () {
 					}
 				}
 				if ($(e.target).attr("name") == "confirm_delete") {
-					// alert(1);
 					dialog.removeContent();
 					dialog.setContent(data);
 					if (remove === true) {

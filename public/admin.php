@@ -6,9 +6,9 @@ if (!isset($_SESSION['user'])) {
 }
 	$page_title = "Add/Edit Event";
 	$css_files = array(
-		'base.css',
-		'layout.css',
-		'style.css'
+		'assets/css/base.css',
+		'assets/css/layout.css',
+		'assets/css/style.css',
 	);
 
 	include_once 'assets/common/header.inc.php';

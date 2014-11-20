@@ -1,0 +1,82 @@
+@charset "UTF-8";
+/**
+ * 
+ * @authors R7 ()
+ * @date    2014-11-19 20:09:33
+ * @version $Id$
+ */
+/*header*/
+.header{
+	box-shadow: 1px 1px 3px 3px rgba(20,20,20,0.2);
+}
+.header{background-color: #fff;}
+.header:after{content:"\0020";display:block;height:0;clear:both;visibility:hidden;overflow:hidden;}
+.header{display:block;*zoom:1}
+.header .logo{
+	overflow: hidden;
+	text-indent: -99em;
+	font-size: 0;
+	width: 70px;
+	height: 70px;
+	background: url("../images/logo.jpg") no-repeat 0 0;
+	background-size:70px 70px;
+	/*padding-right: 10px;*/
+}
+.header .logo,
+.header .nav{margin-right: 10px;}
+.header .logo,
+.header .nav{
+	float: left;
+	height: 50px;
+}
+/*.header .nav li.menu a:hover{
+	color: #333;
+	background-color: #fff;
+}*/
+.header .nav li.menu{
+	float: left;
+	position: relative;
+}
+.header .nav .menu-bd{
+	position: absolute;top: 50px;left: 0;
+	width: 200px;
+	display: none;
+}
+.header .menu-hd{
+	float: left;
+	border-left: 1px solid #f9f9f9;
+}
+.header .nav .menu{}
+.header .nav .menu-hd{line-height: 50px;}
+.header .nav .menu-hd i{margin-left:5px;font-size: 12px;color: #999;}
+.header .nav .menu-hd span,
+.header .nav .menu-hd a{
+	float: left;
+	padding:0 30px;
+	height: 50px;
+	font-size: 18px;
+	/*border-left: 1px solid #333;*/
+}
+.header .nav .menu-bd{
+	background-color: #fff;
+	/*border: 1px solid #333;*/
+}
+.header .nav li.menu .menu-bd a{
+	display: block;
+	padding: 10px;
+}
+/*.header .nav li.menu a:hover{
+	color: #fff;
+	background-color: #666;
+}*/
+.header .nav .menu:hover .menu-bd{
+	display: block;
+}
+
+
+
+
+
+
+
+

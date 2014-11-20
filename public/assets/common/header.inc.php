@@ -9,28 +9,48 @@
 
 <?php if (isset($css_files)):?>
 	<?php foreach ($css_files as $css):?>
-		<link href="assets/css/<?php echo $css; ?>" rel="stylesheet">
-	<?php endforeach?>
+		<link href="<?php echo $css;?>" rel="stylesheet">
+<?php endforeach?>
 <?php endif?>
 
 <?php if (isset($js_files)):?>
 	<?php foreach ($js_files as $js):?>
-		<script src="assets/js/<?php echo $js; ?>" type="text/javascript"></script>
-	<?php endforeach?>
+		<script src="<?php echo $js;?>" type="text/javascript"></script>
+<?php endforeach?>
 <?php endif?>
 </head>
 <body>
 
 <div class="header">
 	<a class="logo" href="/">R日历</a>
-	<!-- <ul class="nav">
-		<li class="on"><a href="#">日</a></li>
+	<ul class="nav">
+		<li class="menu">
+			<div class="menu-hd"><a href="#">项目</a></div>
+			<div class="menu-bd">
+				<ul>
+					<li><a href="#">logo创意</a></li>
+					<li><a href="#">我的搜藏精品</a></li>
+					<li><a href="#">对工作中的一些问题的看法</a></li>
+				</ul>
+			</div>
+		</li>
+		<li class="menu">
+			<div class="menu-hd"><span>视图</span></div>
+			<div class="menu-bd">
+				<ul>
+					<li><a href="#">年</a></li>
+					<li><a href="#">月</a></li>
+					<li><a href="#">日</a></li>
+				</ul>
+			</div>
+		</li>
+		<!-- <li class="on"><a href="#">日</a></li>
 		<li><a href="#">周</a></li>
 		<li><a href="#">月</a></li>
 		<li><a href="#">年</a></li>
 		<li><a href="#">统计</a></li>
-		<li><a href="#">分类</a></li>
-	</ul> -->
+		<li><a href="#">分类</a></li> -->
+	</ul>
 	<!-- <ul class="userNav">
 		<li><a href="/">年</a></li>
 		<li><a href="/">月</a></li>
