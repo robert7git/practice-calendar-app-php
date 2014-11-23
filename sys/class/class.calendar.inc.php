@@ -12,66 +12,44 @@ class Calendar extends DB_Connect {
     private $_y;
     private $_daysInMonth;
     private $_startDay;
+
+    private $_daysInMonthNext;
+    private $_daysInMonthPrev;
+
     public function __construct($dbo=null, $useDate=null){
         parent::__construct($dbo);
         if (isset($useDate)) {
         	$this->_useDate = $useDate;
         } else {
         	$this->_useDate = date('Y-m-d H:i:s');
+            // echo $this->_useDate;
         }
         
         $ts = strtotime($this->_useDate);
         $this->_m = date('m',$ts);
         $this->_y = date('Y',$ts);
+        // echo $ts;
+        // echo '<br/>';
+        // echo $this->_m;
+        // echo '<br/>';
+        // echo $this->_y;
 
         $this->_daysInMonth = cal_days_in_month(CAL_GREGORIAN, $this->_m, $this->_y);
+        $this->_daysInMonthNext = cal_days_in_month(CAL_GREGORIAN, $this->_m + 1, $this->_y);
+        $this->_daysInMonthPrev = cal_days_in_month(CAL_GREGORIAN, $this->_m - 1, $this->_y);
+        // echo  $this->_daysInMonthNext;
+        // echo  $this->_daysInMonthPrev;
+        // echo '<br/>';
+        // echo $this->_m;
+        // echo '<br/>';
+        // echo $this->_y;
 
         $ts = mktime(0,0,0, $this->_m, 1, $this->_y);
         $this->_startDay = date('w', $ts);
+        // echo $this->_startDay;
         // echo "<pre>", print_r($this->_loadEventData(1)), "</pre>";
         // echo "<pre>", print_r($this->_loadEventData()), "</pre>";
         // echo "<pre>", print_r($this->_loadEventById(1)), "</pre>";
-    }
-    private function _loadEventData($id=null){
-    	$sql = "SELECT 
-    			`event_id`, 
-    			`event_title`, 
-    			`event_desc`, 
-    			`event_start`, 
-    			`event_end`
-    			FROM `events` ";
-    	if (!empty($id)) {
-    		$sql .= "WHERE `event_id` =:id LIMIT 1";
-    	} else {
-    		/*找出这个月的第一天和最后一天*/
-    		$start_ts = mktime(0, 0, 0, $this->_m, 1, $this->_y);
-    		$end_ts = mktime(23, 59, 59, $this->_m+1, 0, $this->_y);
-    		$start_date = date('Y-m-d H:i:s', $start_ts);
-    		$end_date = date('Y-m-d H:i:s', $end_ts);
-
-    		// echo $start_date;
-    		// echo $end_date;
-
-    		/*找出当前月份的活动*/
-    		$sql .= "WHERE `event_start` 
-    		BETWEEN '$start_date' 
-    		AND '$end_date' 
-    		ORDER BY `event_start`";
-    		// echo $sql;
-    	}
-
-    	try {
-    		$stmt = $this->db->prepare($sql);
-    		if (!empty($id)) {
-    			$stmt->bindParam(":id", $id, PDO::PARAM_INT);
-    		}
-    		$stmt->execute();
-    		$results = $stmt->fetchAll(PDO::FETCH_ASSOC);
-    		$stmt->closeCursor();
-    		return $results;
-    	} catch (Exception $e) {
-    		die($e->getMessage());
-    	}
     }
     private function _loadEventById($id){
     	if (empty($id)) {
@@ -85,11 +63,66 @@ class Calendar extends DB_Connect {
     		}
     	}
     }
+    private function _loadEventData($id=null){
+        $sql = "SELECT 
+                `event_id`, 
+                `event_title`, 
+                `event_desc`, 
+                `event_start`, 
+                `event_end`
+                FROM `events` ";
+        if (!empty($id)) {
+            $sql .= "WHERE `event_id` =:id LIMIT 1";
+        } else {
+            /*找出这个月的第一天和最后一天*/
+            $start_ts = mktime(0, 0, 0, $this->_m, 1, $this->_y);
+            $end_ts = mktime(23, 59, 59, $this->_m+1, 0, $this->_y);
+            $start_date = date('Y-m-d H:i:s', $start_ts);
+            $end_date = date('Y-m-d H:i:s', $end_ts);
+
+            // echo $start_date . "<br/>";
+            // echo $end_date;
+
+            /*找出当前月份的活动*/
+            $sql .= "WHERE `event_start` 
+            BETWEEN '$start_date' 
+            AND '$end_date' 
+            ORDER BY `event_start`";
+            // echo $sql;
+        }
+
+        try {
+            $stmt = $this->db->prepare($sql);
+            if (!empty($id)) {
+                $stmt->bindParam(":id", $id, PDO::PARAM_INT);
+            }
+            $stmt->execute();
+            $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            $stmt->closeCursor();
+            return $results;
+        } catch (Exception $e) {
+            die($e->getMessage());
+        }
+    }
+    //把事件加工成，日期索引数组的格式
+    private function _createEventObj(){
+        $arr = $this->_loadEventData();
+        $events = array();
+        foreach ($arr as $event) {
+            $day = date('j', strtotime($event['event_start']));
+            try{
+                $events[$day][] = new Event($event);
+            }catch(Exception $e){
+                die($e->getMessage());
+            }
+        }
+        return $events;
+    }
+    //查看事件
     public function displayEvent($id){
     	if (empty($id)) {
     		return null;
     	} 
-
     	/*确保id是整数*/
     	$id = preg_replace('/[^0-9]/', '', $id);
 
@@ -115,26 +148,10 @@ class Calendar extends DB_Connect {
 FORM_MARKUP;
     }
 
-    private function _createEventObj(){
-    	$arr = $this->_loadEventData();
-    	$events = array();
-    	foreach ($arr as $event) {
-    		$day = date('j', strtotime($event['event_start']));
-    		try{
-    			$events[$day][] = new Event($event);
-    		}catch(Exception $e){
-    			die($e->getMessage());
-    		}
-    	}
-    	return $events;
-    }
     public function buildCalendar(){
-        // $cal_month = date('Y.M ', strtotime($this->_useDate));
         $cal_month = date('Y . m ', strtotime($this->_useDate));
     	$cal_id = date('Y-m ', strtotime($this->_useDate));
-        // $weekdays = array('Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat');
         $weekdays = array('日', '一', '二', '三', '四', '五', '六');
-    	// $weekdays = array( '一', '二', '三', '四', '五', '六','日');
         //w3c规定id第一个字符必须是字母
     	$html = "\n\t<h2 class='calendar-date' id='month-$cal_id'>" . $cal_month . "</h2>";
     	for ($d=0, $labels=null;  $d<7 ; ++$d) { 
@@ -146,38 +163,70 @@ FORM_MARKUP;
 
     	$events = $this->_createEventObj();
 
+        // echo "<pre>";
+        // echo print_r($events);
+        // echo "</pre>";
+
     	$html .= "\n\t<ul>";
-    	for ($i=1, $c=1, $t=date('j'), $m=date('m'), $y=date('Y'); $c <= $this->_daysInMonth; ++$i) { 
+        // echo date('j');
+    	for ($i=1, 
+            $c=1, 
+            //上个月
+            $j=$this->_daysInMonthPrev-$this->_startDay+1, 
+            //下个月
+            $k=1, 
+            $t=date('j'), 
+            $m=date('m'), 
+            $y=date('Y');
+
+            $c <= $this->_daysInMonth;
+            // $c <= 10; 
+
+            ++$i) { 
+            // echo $i."<br>";
+            // echo $i."<br>";
+            // echo $c."<br>";
     		//更多步骤
     		$class = $i<=$this->_startDay ? "fill" : null;
 
-    		if ($c+1 == $t && $m=$this->_m && $y==$this->_y) {
+    		if ($c == $t && $m == $this->_m && $y == $this->_y) {
     			$class = "today";
     		}
-
-    		$ls = sprintf("\n\t\t<li class=\"%s\">", $class);
+            $ls = sprintf("\n\t\t<li class=\"%s\">", $class);
+    		// $ls = "\n\t\t<li class=\"$class\">";
     		$le = "\n\t\t</li>";
 
     		$event_info = null;
-    		if ($this->_startDay<$i && $this->_daysInMonth>=$c) {
+
+            if ($this->_startDay>=$i && $this->_daysInMonth>=$c) {
+                // $date = sprintf("\n\t\t\t<strong>%02d</strong>", $c++);
+                $date = $j++;
+                // echo $c."<br/>";
+            }elseif ($this->_startDay<$i && $this->_daysInMonth>=$c) {
+                // echo $i."<br/>";
 	    		if (isset($events[$c])) {
 	    			foreach ($events[$c] as $event) {
-	    				$link = '<a class="event-tit" href="view.php?event_id=' . $event->id . '">' . $event->title . "</a>";
+	    				$link = '<a class="event-tit" title="' . $event->title . '" href="view.php?event_id=' . $event->id . '">' . $event->title . "</a>";
 	    				$event_info .= "\n\t\t\t$link";
 	    			}
 	    		}
 	    		$date = sprintf("\n\t\t\t<strong>%02d</strong>", $c++);
-	    	} else {
-	    		$date = "&nbsp;";
+	    	}else {
+                // $date = "&nbsp;";
+                $date = $k++;
 	    	}
 
 	    	$wrap = $i!=0 && $i%7 == 0 ? "\n\t</ul>\n\t<ul>" : null;
 
 	    	$html .=$ls . $date . $event_info . $le . $wrap;
     	}
-
+// echo $i;
+        // echo $i;
+        //末尾
     	while ($i%7!=1) {
-    		$html .= "\n\t\t<li class=\"fill\">&nbsp;</li>";
+            // echo $i;
+    		$html .= "\n\t\t<li class=\"fill\">$k</li>";
+            ++$k;
     		++$i;
     	}
     	$html .="\n\t</ul>";
@@ -219,16 +268,14 @@ FORM_MARKUP;
                                 <dl>
                                     <dt><label for="event_start">开始</label></dt>
                                     <dd>
-                                        <input type="text" name="event_start" id="event_start" class="text datepicker" value="$event->start"/>
-                                        <!--<input type="text" name="event_start_time" id="event_start_time" class="text timepicker"/>-->
+                                        <input type="text" name="event_start" id="event_start" class="text form_datetime" value="$event->start"/>
                                     </dd>
                                 </dl>
 
                                 <dl>
                                     <dt><label for="event_end">结束</label></dt>
                                     <dd>
-                                        <input type="text" name="event_end"  id="event_end" class="text datepicker" value="$event->end"/>
-                                        <!--<input type="text" name="event_end_time"  id="event_end_time" class="text timepicker"/>-->
+                                        <input type="text" name="event_end"  id="event_end" class="text form_datetime" value="$event->end"/>
                                     </dd>
                                 </dl>
 
@@ -268,16 +315,13 @@ OUTPUT_HTML;
                                 <dl>
                                     <dt><label for="event_start">开始</label></dt>
                                     <dd>
-                                        <input type="text" name="event_start" id="event_start" class="text datepicker" placeholder="开始时间"/>
-                                        <input type="text" name="event_start_time"  id="event_start_time" class="text timepicker"/>
+                                        <input type="text" name="event_start" id="event_start" class="text form_datetime" placeholder="开始时间"/>
                                     </dd>
                                 </dl>
-
                                 <dl>
                                     <dt><label for="event_end">结束</label></dt>
                                     <dd>
-                                        <input type="text" name="event_end"  id="event_end" class="text datepicker" placeholder="结束" value=""/>
-                                        <input type="text" name="event_end_time"  id="event_end_time" class="text timepicker"/>
+                                        <input type="text" name="event_end"  id="event_end" class="text form_datetime" placeholder="结束" value=""/>
                                     </dd>
                                 </dl>
 
@@ -360,7 +404,7 @@ OUTPUT_HTML;
         return <<<ADMIN_OPTIONS
         <div class="ctrlOptions fix">
             <a class="btn fl mr5" id="btn-addEvent" href="admin.php"> + 添加事件</a>
-             <form action="assets/inc/process.inc.php" method="post">
+             <form action="inc/process/process.inc.php" method="post">
                 <input type="submit" class="btn btn_link fl mr5" id="btn-userLogout" value="退出"/>
                 <input type="hidden" name="token" value="$_SESSION[token]"/>
                 <input type="hidden" name="action" value="user_logout"/>

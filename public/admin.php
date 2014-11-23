@@ -6,15 +6,18 @@ if (!isset($_SESSION['user'])) {
 }
 	$page_title = "Add/Edit Event";
 	$css_files = array(
-		'assets/css/base.css',
-		'assets/css/layout.css',
-		'assets/css/style.css',
+	'assets/com/css/base.css',
+	'assets/com/css/layout.css',
+	'assets/lib/bootstrap/css/bootstrap.min.css',
+	'assets/com/css/header.css',
+	'assets/com/css/style.css'
 	);
 
-	include_once 'assets/common/header.inc.php';
 	$cal = new Calendar($dbo);
 ?>
-
+<?php
+include_once 'inc/common/header.inc.php';
+?>
 <div id="container">
 	<div class="content">
 			<?php
@@ -23,5 +26,5 @@ if (!isset($_SESSION['user'])) {
 	</div>
 </div>
 <?php
-	include_once 'assets/common/footer.inc.php';
+include_once 'inc/common/footer.inc.php';
 ?>

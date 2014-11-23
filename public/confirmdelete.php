@@ -12,9 +12,11 @@ include_once '../sys/core/init.inc.php';
 	
 	$page_title = "Confirm Delete Event?";
 	$css_files = array(
-		'assets/css/base.css',
-		'assets/css/layout.css',
-		'assets/css/style.css',
+	'assets/com/css/base.css',
+	'assets/com/css/layout.css',
+	'assets/lib/bootstrap/css/bootstrap.min.css',
+	'assets/com/css/header.css',
+	'assets/com/css/style.css'
 	);
 
 
@@ -23,7 +25,7 @@ include_once '../sys/core/init.inc.php';
 ?>
 
 <?php
-	include_once 'assets/common/header.inc.php';
+include_once 'inc/common/header.inc.php';
 ?>
 
 <div id="container">
@@ -36,5 +38,5 @@ include_once '../sys/core/init.inc.php';
 	</div>
 </div>
 <?php
-	include_once 'assets/common/footer.inc.php';
+include_once 'inc/common/footer.inc.php';
 ?>

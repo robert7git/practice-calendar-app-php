@@ -13,16 +13,18 @@
 	include_once '../sys/core/init.inc.php';
 	$page_title = "查看事件";
 	$css_files = array(
-		'assets/css/base.css',
-		'assets/css/layout.css',
-		'assets/css/style.css',
+	'assets/com/css/base.css',
+	'assets/com/css/layout.css',
+	'assets/lib/bootstrap/css/bootstrap.min.css',
+	'assets/com/css/header.css',
+	'assets/com/css/style.css'
 	);
 
 
 	$cal = new Calendar($dbo);
 ?>
 <?php
-	include_once 'assets/common/header.inc.php';
+include_once 'inc/common/header.inc.php';
 ?>
 
 <div id="container">
@@ -35,5 +37,5 @@
 	</div>
 </div>
 <?php
-	include_once 'assets/common/footer.inc.php';
+include_once 'inc/common/footer.inc.php';
 ?>
