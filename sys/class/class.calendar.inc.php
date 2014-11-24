@@ -80,6 +80,8 @@ class Calendar extends DB_Connect {
             $start_date = date('Y-m-d H:i:s', $start_ts);
             $end_date = date('Y-m-d H:i:s', $end_ts);
 
+            // echo $end_ts . "<br/>";
+            // echo $this->_m . "<br/>";
             // echo $start_date . "<br/>";
             // echo $end_date;
 
@@ -289,8 +291,8 @@ FORM_MARKUP;
                                     <input type="hidden" name="event_id" value="$event->id"/>
                                     <input type="hidden" name="token" value="$_SESSION[token]"/>
                                     <input type="hidden" name="action" value="event_edit"/>
-                                   <input type="submit" class="btn btn_submit mr5" name="event_submit" value="提交"/>
-                                   <a class="btn btn_link btn_cancel" id="btn_cancel" href="./">取消</a>
+                                    <input type="submit" class="btn btn_submit mr5" name="event_submit" value="提交"/>
+                                    <a class="btn btn_link btn_cancel" id="btn_cancel" href="./">取消</a>
                                 </div>
                             </fieldset>
                         </form>
